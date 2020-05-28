@@ -1,0 +1,65 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "my tester",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SearchMovieIntent",
+                    "slots": [
+                        {
+                            "name": "Movie",
+                            "type": "AMAZON.Movie"
+                        },
+                        {
+                            "name": "id",
+                            "type": "AMAZON.NUMBER"
+                        },
+                        {
+                            "name": "year",
+                            "type": "AMAZON.FOUR_DIGIT_NUMBER"
+                        }
+                    ],
+                    "samples": [
+                        "{id}",
+                        "download {Movie}",
+                        "request the movie {Movie}",
+                        "download the movie  {Movie}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "OmbiMovie",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "dummyslot"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "testentry"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
