@@ -14,5 +14,7 @@ Notes:
 Issues:
 
 -I don't have a way yet to have individual users use Ombi.
+
 -I don't know how to handle multiple results with Alexa. If there is more than one movie with the exact same name, like a remake, I don't know how to get ALexa to ask for more information. This is my biggest issue right now. I'm kind of stuck on it so if anyone has any ideas let me know.
+
 -For some reason, I can only test the code in the Alexa simulator once. After that it doesn't respond until I reload the page.
