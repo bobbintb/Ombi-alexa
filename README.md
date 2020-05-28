@@ -1,6 +1,6 @@
 # Ombi-alexa
 
-This is a work in progress and is not currently functioning. There are a few issues that need resolved.
+This is a work in progress and is not currently functioning. I am trying to finish the search first. There are a few issues that need resolved.
 
 Installation:
 You need a free Amazon developer account for this. You can import the json for the Alexa part. The python files go in the lambda backend. I'll probably add more detailed instructions later but you can just google how to import an alexa skil for now.
