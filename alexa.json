@@ -27,19 +27,21 @@
                             "type": "AMAZON.Movie"
                         },
                         {
-                            "name": "id",
-                            "type": "AMAZON.NUMBER"
-                        },
-                        {
-                            "name": "year",
-                            "type": "AMAZON.FOUR_DIGIT_NUMBER"
+                            "name": "response",
+                            "type": "OmbiMovie",
+                            "samples": [
+                                "number {response}",
+                                "the one with {response}",
+                                "the one from {response}",
+                                "the {response} one"
+                            ]
                         }
                     ],
                     "samples": [
-                        "{id}",
+                        "{response}",
                         "download {Movie}",
                         "request the movie {Movie}",
-                        "download the movie  {Movie}"
+                        "download the movie {Movie}"
                     ]
                 }
             ],
@@ -49,17 +51,756 @@
                     "values": [
                         {
                             "name": {
-                                "value": "dummyslot"
+                                "value": "5",
+                                "synonyms": [
+                                    "five"
+                                ]
                             }
                         },
                         {
                             "name": {
-                                "value": "testentry"
+                                "value": "4",
+                                "synonyms": [
+                                    "four"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "3",
+                                "synonyms": [
+                                    "three"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2",
+                                "synonyms": [
+                                    "two"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1",
+                                "synonyms": [
+                                    "one"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2020"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2019"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2018"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2017"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2016"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2015"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2014"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2013"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2012"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2011"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2010"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2009"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2008"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2007"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2006"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2005"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2004"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2003"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2002"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2001"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "2000"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1999"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1998"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1997"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1996"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1995"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1994"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1993"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1992"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1991"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1990"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1989"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1988"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1987"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1986"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1985"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1984"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1983"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1982"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1981"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1980"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1979"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1978"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1977"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1976"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1975"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1974"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1973"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1972"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1971"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1970"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1969"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1968"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1967"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1966"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1965"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1964"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1963"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1962"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1961"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1960"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1959"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1958"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1957"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1956"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1955"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1954"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1953"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1952"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1951"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1950"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1949"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1948"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1947"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1946"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1945"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1944"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1943"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1942"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1941"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1940"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1939"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1938"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1937"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1936"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1935"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1934"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1933"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1932"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1931"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1930"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1929"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1928"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1927"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1926"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1925"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1924"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1923"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1922"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1921"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1920"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1919"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1918"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1917"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1916"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1915"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1914"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1913"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1912"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1911"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1910"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1909"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1908"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1907"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1906"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1905"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1904"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1903"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1902"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1901"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "1900"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fifth"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "fourth"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "third"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "second"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "first"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "michelle pfeiffer"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "melanie griffith"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "julia roberts"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "keanu reeves"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "samuel L jackson"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "robert downey jr"
                             }
                         }
                     ]
                 }
             ]
-        }
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SearchMovieIntent",
+                    "delegationStrategy": "SKILL_RESPONSE",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "Movie",
+                            "type": "AMAZON.Movie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        },
+                        {
+                            "name": "response",
+                            "type": "OmbiMovie",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.782720424460.1486815732699"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.782720424460.321816128363",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which one?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.782720424460.1486815732699",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Which one?"
+                    }
+                ]
+            }
+        ]
     }
 }
