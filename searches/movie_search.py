@@ -3,7 +3,9 @@ import itertools
 import tmdbsimple as tmdb
 from fuzzywuzzy import fuzz
 import roman
-
+from datetime import datetime
+import dateparser
+import operator
 upperLimitRatio = 90
 tmdb.API_KEY = ''
 
@@ -103,6 +105,8 @@ def search(input_title):
     expandedTitles = expandTitle(input_title)
     searchResults = searchTitles(expandedTitles)
     sortedResults = phaseOne(searchResults, expandedTitles)
+    if not sortedResults:
+        return sortedResults
     if sortedResults[-1]['ratio'] <= upperLimitRatio:
         sortedResults = phaseTwo(searchResults,expandedTitles)
     bestMatches = list(filter(lambda person: person['ratio'] == sortedResults[-1]['ratio'], sortedResults))
