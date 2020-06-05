@@ -7,11 +7,15 @@
 import logging
 import tmdbsimple as tmdb
 import pyombi
+import re
 import ask_sdk_core.utils as ask_utils
 import searches.movie_search
 import searches.dialogue_constructor
 
 from datetime import datetime
+from ask_sdk_model import (
+    Response, IntentRequest, DialogState, SlotConfirmationStatus, Slot)
+from ask_sdk_model.dialog import DelegateDirective
 from ask_sdk_core.skill_builder import SkillBuilder
 from ask_sdk_core.dispatch_components import AbstractRequestHandler
 from ask_sdk_core.dispatch_components import AbstractExceptionHandler
@@ -20,10 +24,17 @@ from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model.ui import StandardCard
 from ask_sdk_model.ui import Image
 
-from ask_sdk_model import Response
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+ombi = pyombi.Ombi(
+        ssl=True,
+        host="your.ombi.url",
+        port="443",
+        username=None,
+        api_key="xxxxxx"
+        )
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
@@ -44,36 +55,21 @@ class LaunchRequestHandler(AbstractRequestHandler):
                 .response
         )
 
-class SearchActionHandler(AbstractRequestHandler):
-    def can_handle(self, handler_input):
-        # type: (HandlerInput) -> bool
-        return ask_utils.is_request_type("AMAZON.SearchAction<object@VideoCreativeWork>")(handler_input)
-
-    def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        intent_name = ask_utils.get_intent_name(handler_input)
-        speak_output = "You just triggered " + intent_name + "."
-
-        return (
-            handler_input.response_builder
-                .speak(speak_output)
-                # .ask("add a reprompt if you want to keep the session open for the user to respond")
-                .response
-        )
-
 class SearchMovieIntentHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return ask_utils.is_intent_name("SearchMovieIntent")(handler_input)
+        return (ask_utils.is_intent_name("SearchMovieIntent")(handler_input) and handler_input.request_envelope.request.dialog_state != DialogState.COMPLETED)
 
     def handle(self, handler_input):
-        slots = handler_input.request_envelope.request.intent.slots
+        # type: (HandlerInput) -> Response
+        print(DialogState)
+        currentIntent = handler_input.request_envelope.request.intent
+        slots = currentIntent.slots
         movie = slots["Movie"].value
-        #response = search.movie(query=movie)
         search_result = searches.movie_search.search(movie)
         if not search_result:
-            speak_output = "Sorry, there were no search results."
+            speak_output = f"Sorry, there were no matches for {movie}."
             return (
                 handler_input.response_builder
                     .speak(speak_output)
@@ -84,27 +80,68 @@ class SearchMovieIntentHandler(AbstractRequestHandler):
             search_result[i]['year']=(year.year)
         if len(search_result) == 1:
             text = f"{search_result[0]['title']} ({search_result[0]['year']}) \n\n{search_result[0]['overview']}"
-            speak_output = search_result[0]['title']
+            #speak_output = search_result[0]['title']
             img = Image(small_image_url="https://image.tmdb.org/t/p/w440_and_h660_face" + search_result[0]['poster_path'])
+            if movieDownload(search_result[0]) == True:
+                speak_output = f'{search_result[0]["title"]} has succesfully been added to the request list.'
+            else:
+                speak_output = 'Sorry, there was a problem requesting the movie.'
             return (
                 handler_input.response_builder
                     .speak(speak_output)
-                    .set_card(StandardCard(title="Results", text=text, image=img))
+                    #.set_card(StandardCard(title="Results", text=text, image=img))
+                    #.add_directive(DelegateDirective(currentIntent))
+                    #.addDelegateDirective(currentIntent)
                     .response
             )
         else:
             sorted_x = (sorted(search_result, key = lambda i: i['year'], reverse=True))
+            session_attr = handler_input.attributes_manager.session_attributes
+            session_attr["sorted_x"] = sorted_x
+            #searches.dialogue_constructor.get_cast(sorted_x)
+            for i, x in enumerate(sorted_x):
+                actor = searches.dialogue_constructor.get_cast(sorted_x[i])
+                sorted_x[i]['actor']=actor
+            
             test = searches.dialogue_constructor.construct(sorted_x)
-            speak_output = "Sorry, there was more than one exact match and I don't have the functionality to handle that yet."
-            handler_input.response_builder.speak(test).ask(speak_output)
+            handler_input.response_builder.speak(test)#.ask(speak_output)
+            #handler_input.request_envelope.session.sorted_x.value = sorted_x
+            #print("sorted :", handler_input.request_envelope.session.sorted_x.value)
+            print(DialogState)
             return (
                 handler_input.response_builder
                 #handler_input.response_builder
                     .speak(test)
+                    .add_directive(DelegateDirective(currentIntent))
                     #.ask(speak_output)
                     # .ask("add a reprompt if you want to keep the session open for the user to respond")
                     #.set_card(StandardCard(title=len(search_result), text=title))
                    .response
+            )
+
+class CompletedSearchMovieIntentHandler(AbstractRequestHandler):
+    """Handler for Hello World Intent."""
+    def can_handle(self, handler_input):
+        # type: (HandlerInput) -> bool
+        return (ask_utils.is_intent_name("SearchMovieIntent")(handler_input) and DialogState.COMPLETED)
+    
+    def handle(self, handler_input):
+        currentIntent = handler_input.request_envelope.request.intent
+        slots = currentIntent.slots
+        user_response = slots["response"].value
+        print(user_response)
+        session_attr = handler_input.attributes_manager.session_attributes
+        item=narrowDownResults(user_response,session_attr["sorted_x"])
+        print(session_attr["sorted_x"])
+        if movieDownload(item) ==True:
+            speak_output = f"{item['title']} has succesfully been added to the request list."
+        else:
+            speak_output = 'Sorry, there was a problem requesting the movie.'
+        return (
+            handler_input.response_builder
+                .speak(speak_output)
+                .set_should_end_session(True)
+                .response
             )
 
 
@@ -203,6 +240,35 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
                 .response
         )
 
+def narrowDownResults(user_response,sorted_x):
+    result = re.sub('[^0-9]','', user_response)
+    if result.isnumeric() and len(result) <= 2 and len(user_response) <= 4:
+        for i, item in enumerate(sorted_x):
+            if i+1 == int(result):
+                return sorted_x[i]
+    elif result.isnumeric() and len(result) == 4 and len(user_response) == 4:
+        for item in sorted_x:
+            if item['year'] == int(result):
+                return item
+    elif user_response == 'last':
+        return sorted_x[-1]
+    else:
+        for item in sorted_x:
+            if user_response.lower() in item['actor'].lower():
+                return item
+
+def movieDownload(item):
+    ombi.authenticate()
+    try:
+        ombi.test_connection()
+        print("Connection success")
+    except pyombi.OmbiError as e:
+        print(e)
+        return False
+    
+    ombi.request_movie(item['id'])
+    return True
+
 # The SkillBuilder object acts as the entry point for your skill, routing all request and response
 # payloads to the handlers above. Make sure any new handlers or interceptors you've
 # defined are included below. The order matters - they're processed top to bottom.
@@ -211,8 +277,8 @@ class CatchAllExceptionHandler(AbstractExceptionHandler):
 sb = SkillBuilder()
 
 sb.add_request_handler(LaunchRequestHandler())
-sb.add_request_handler(SearchActionHandler())
 sb.add_request_handler(SearchMovieIntentHandler())
+sb.add_request_handler(CompletedSearchMovieIntentHandler())
 sb.add_request_handler(HelpIntentHandler())
 sb.add_request_handler(CancelOrStopIntentHandler())
 sb.add_request_handler(SessionEndedRequestHandler())
