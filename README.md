@@ -1,9 +1,10 @@
 # Ombi-alexa
 
-This is a work in progress and is not currently functioning. Right now I have movie searches working.
+This is a work in progress and is currently partially functioning. Right now I have movie requests working.
 
 Installation:
-You need a free Amazon developer account for this. You can import the json for the Alexa part. The python files go in the lambda backend. I'll probably add more detailed instructions later but you can just google how to import an alexa skill for now.
+You need a free Amazon developer account for this. Follow these instructions:
+https://developer.amazon.com/en-US/docs/alexa/hosted-skills/alexa-hosted-skills-git-import.html
 
 Notes:
 
