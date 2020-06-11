@@ -11,7 +11,8 @@ Notes:
 
 -Make sure and put the API key for Ombi in the lambda_function.py file.
 
--Because Alexa is voice based, I had to make changes to the way Ombi does searches since the idea is to find the best match with minimal response from the user to find the right match. It does this based on Levenshtein distance. It also uses themoviedb to do searches instead of Ombi's built in search, which actually searches themoviedb. This is because the Ombi search doesn't have enough information to be able to narrow down the results.
+-Because Alexa is voice based, I had to make changes to the way Ombi does searches since the idea is to find the best match with minimal response from the user to find the right match. It does this based on Levenshtein distance. It also uses themoviedb to do searches instead of Ombi's built in search, which actually searches themoviedb. This is because the Ombi search doesn't have enough information to be able to narrow down the results. An explanation can be found here:
+https://github.com/bobbintb/Ombi-alexa/blob/master/search.md
 
 Issues:
 
