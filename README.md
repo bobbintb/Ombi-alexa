@@ -4,6 +4,7 @@ This is a work in progress and is currently partially functioning. Right now I h
 
 Installation:
 You need a free Amazon developer account for this. Follow these instructions:
+
 https://developer.amazon.com/en-US/docs/alexa/hosted-skills/alexa-hosted-skills-git-import.html
 
 Notes:
