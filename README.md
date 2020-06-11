@@ -1,6 +1,6 @@
 # Ombi-alexa
 
-This is a work in progress and is currently partially functioning. Right now I have movie requests working.
+This is a work in progress and is currently partially functioning. Right now I have movie requests working. I don't have a lot of time to work on this and develope it so any help is welcome. Feel free to submit issues and ideas as well.
 
 Installation:
 You need a free Amazon developer account for this. Follow these instructions:
