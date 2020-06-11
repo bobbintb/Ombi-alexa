@@ -30,10 +30,10 @@ logger.setLevel(logging.INFO)
 
 ombi = pyombi.Ombi(
         ssl=True,
-        host="your.ombi.url",
+        host="",
         port="443",
         username=None,
-        api_key="xxxxxx"
+        api_key=""
         )
 
 
@@ -139,7 +139,7 @@ class CompletedSearchMovieIntentHandler(AbstractRequestHandler):
             speak_output = 'Sorry, there was a problem requesting the movie.'
         return (
             handler_input.response_builder
-                .speak(speak_output)
+                .speak(Alexa.escapeXmlCharacters(speak_output))
                 .set_should_end_session(True)
                 .response
             )
@@ -266,8 +266,15 @@ def movieDownload(item):
         print(e)
         return False
     
-    ombi.request_movie(item['id'])
+    errorMessage=ombi.request_movie(item['id'])
+    print(errorMessage)
     return True
+
+def addResponseBuilder(item):
+    pass
+    # speak_output = f"{item['title']} has succesfully been added to the request list."
+    # speak_output = f"{item['title']} has already been requested."
+    #"errorMessage": "\"Hotel Transylvania\" has already been requested"
 
 # The SkillBuilder object acts as the entry point for your skill, routing all request and response
 # payloads to the handlers above. Make sure any new handlers or interceptors you've
