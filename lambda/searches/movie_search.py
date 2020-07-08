@@ -40,6 +40,8 @@ def searchTitles(list_of_titles):
     searchResults = []
     for title in list_of_titles:
         results = search.movie(query=title)
+        for result in results['results']:
+            result['title'] = result['title'].translate ({ord(c): "" for c in "!@#$%^*()[]{};:,/<>?\|`~-=_+"})      #removes special characters from titles to improve match, since they don't translate with Alexa 
         rateTitles(title, results, searchResults)
     return searchResults
 
