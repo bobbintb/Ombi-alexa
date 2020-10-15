@@ -59,7 +59,8 @@ class SearchMovieIntentHandler(AbstractRequestHandler):
     """Handler for Hello World Intent."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-        return (ask_utils.is_intent_name("SearchMovieIntent")(handler_input) and handler_input.request_envelope.request.dialog_state != DialogState.COMPLETED)
+        return ask_utils.is_request_type("CanFulfillIntentRequest")(handler_input) or \
+               (ask_utils.is_intent_name("SearchMovieIntent")(handler_input) and handler_input.request_envelope.request.dialog_state != DialogState.COMPLETED)
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
@@ -84,12 +85,16 @@ class SearchMovieIntentHandler(AbstractRequestHandler):
             img = Image(small_image_url="https://image.tmdb.org/t/p/w440_and_h660_face" + search_result[0]['poster_path'])
             if movieDownload(search_result[0]) == True:
                 speak_output = f'{search_result[0]["title"]} has succesfully been added to the request list.'
+            elif movieDownload(search_result[0]) == 'connection_error':
+                speak_output = 'Sorry, there was a connection problem when requesting the movie.'
+            elif movieDownload(search_result[0]) == 'already_requested':
+                speak_output = f'{search_result[0]["title"]} has already been requested.'
             else:
                 speak_output = 'Sorry, there was a problem requesting the movie.'
             return (
                 handler_input.response_builder
                     .speak(speak_output)
-                    #.set_card(StandardCard(title="Results", text=text, image=img))
+                    .set_card(StandardCard(text=text, image=img))
                     #.add_directive(DelegateDirective(currentIntent))
                     #.addDelegateDirective(currentIntent)
                     .response
@@ -133,10 +138,12 @@ class CompletedSearchMovieIntentHandler(AbstractRequestHandler):
         session_attr = handler_input.attributes_manager.session_attributes
         item=narrowDownResults(user_response,session_attr["sorted_x"])
         print(session_attr["sorted_x"])
-        if movieDownload(item) ==True:
+        if movieDownload(item) == True:
             speak_output = f"{item['title']} has succesfully been added to the request list."
-        else:
-            speak_output = 'Sorry, there was a problem requesting the movie.'
+        elif movieDownload(item) == 'connection_error':
+            speak_output = 'Sorry, there was a connection problem when requesting the movie.'
+        elif movieDownload(item) == 'already_requested':
+            speak_output = 'That movie has already been requested.'
         return (
             handler_input.response_builder
                 .speak(Alexa.escapeXmlCharacters(speak_output))
@@ -263,11 +270,14 @@ def movieDownload(item):
         ombi.test_connection()
         print("Connection success")
     except pyombi.OmbiError as e:
-        print(e)
-        return False
-    
-    errorMessage=ombi.request_movie(item['id'])
-    print(errorMessage)
+        print('Error: ', e)
+        return 'connection_error'
+    try:
+        errorMessage=ombi.request_movie(item['id'])
+    except pyombi.OmbiError as e:
+        if 'has already been requested' in str(e):
+            print(e)
+            return 'already_requested'
     return True
 
 def addResponseBuilder(item):
