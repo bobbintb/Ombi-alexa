@@ -4,6 +4,7 @@
 # Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 # session persistence, api calls, and more.
 # This sample is built using the handler classes approach in skill builder.
+import os
 import logging
 import tmdbsimple as tmdb
 import pyombi
@@ -23,25 +24,31 @@ from ask_sdk_core.handler_input import HandlerInput
 from ask_sdk_model.ui import SimpleCard
 from ask_sdk_model.ui import StandardCard
 from ask_sdk_model.ui import Image
+from dotenv import load_dotenv
 
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+load_dotenv()
+
+ombi_host=os.getenv("OMBI_HOST")
+ombi_port=os.getenv("OMBI_PORT") or 443
+ombi_username=os.getenv("OMBI_USERNAME")
+ombi_api_key=os.getenv("OMBI_API_KEY")
+
 ombi = pyombi.Ombi(
-        ssl=True,
-        host="",
-        port="443",
-        username=None,
-        api_key=""
-        )
+    ssl=True,
+    host=ombi_host,
+    port=ombi_port,
+    username=ombi_username,
+    api_key=ombi_api_key)
 
 
 class LaunchRequestHandler(AbstractRequestHandler):
     """Handler for Skill Launch."""
     def can_handle(self, handler_input):
         # type: (HandlerInput) -> bool
-
         return ask_utils.is_request_type("LaunchRequest")(handler_input)
 
     def handle(self, handler_input):

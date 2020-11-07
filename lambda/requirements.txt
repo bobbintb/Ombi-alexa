@@ -7,3 +7,4 @@ num2words
 fuzzywuzzy
 roman
 dateparser
+python-dotenv
